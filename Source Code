@@ -1,0 +1,47 @@
+import cv2
+import numpy
+
+points = []
+#this is an event callback function
+def crop_image(event,x,y,flags,param):
+    if event == cv2.EVENT_LBUTTONDOWN:
+        points.append((x,y))
+    elif event == cv2.EVENT_LBUTTONUP:
+        points.append((x,y))
+        cv2.rectangle(i,points[0], points[1],(0,0,255),2 )
+        cv2.imshow('mouse', i)
+
+
+#cv2.namedWindow('mouse')
+#cv2.setMouseCallback('mouse', crop_image)
+        
+while 1:
+    i = cv2.imread(r'C:\Users\hp\Downloads\download.jpeg')    #passing static image
+    points =[]
+    print('while again')
+    clone = i.copy()
+    cv2.imshow('mouse',i)
+    
+    cv2.namedWindow('mouse')
+    cv2.setMouseCallback('mouse', crop_image)
+    
+    k1 = cv2.waitKey(0)
+    if k1 == ord('c'):
+        print(points)
+        if len(points) >= 2:
+            cropped_image = clone[points[0][1]:points[1][1],points[0][0]:points[1][0],:]
+            cv2.imshow('Cropped image',cropped_image )
+        k = cv2.waitKey(0)
+        if k == ord('q'):
+            cv2.destroyAllWindows()
+    elif k1 == ord('q'):
+        cv2.destroyAllWindows()
+        break
+    else:
+        cv2.destroyAllWindows()
+        continue
+        
+
+
+
+
